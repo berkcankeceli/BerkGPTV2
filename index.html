@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BerkGPT</title>
+</head>
+<body>
+  <h1>BerkGPT</h1>
+  <textarea id="prompt" rows="5" cols="60" placeholder="GPT’ye yaz..."></textarea><br>
+  <button onclick="askGPT()">Gönder</button>
+  <pre id="response"></pre>
+
+  <script>
+    async function askGPT() {
+      const prompt = document.getElementById("prompt").value;
+      const res = await fetch("/api/ask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ prompt })
+      });
+
+      const data = await res.json();
+      document.getElementById("response").textContent = data.result;
+    }
+  </script>
+</body>
+</html>
